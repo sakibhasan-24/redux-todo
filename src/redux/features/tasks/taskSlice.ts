@@ -1,14 +1,18 @@
+import { RootState } from "@/redux/store/store";
 import { ITask } from "@/types/types";
 import { createSlice } from "@reduxjs/toolkit";
-interface initialState {
+
+interface InitialState {
   tasks: ITask[];
+  filter: "all" | "high" | "low" | "medium";
 }
-const initialState = {
+
+const initialState: InitialState = {
   tasks: [
     {
       id: "task1",
       title: "Task 1",
-      describtion: "Task 1 description description",
+      description: "Task 1 description description",
       dueDate: "2026",
       isCompleted: false,
       priority: "High",
@@ -16,12 +20,13 @@ const initialState = {
     {
       id: "task2",
       title: "Task 2",
-      describtion: "Task 1 description description",
+      description: "Task 1 description description",
       dueDate: "2026",
       isCompleted: false,
-      priority: "High priority",
+      priority: "High",
     },
   ],
+  filter: "all",
 };
 const taskSlices = createSlice({
   name: "task",
@@ -29,4 +34,10 @@ const taskSlices = createSlice({
   reducers: {},
 });
 
+export const selectTasks = (state: RootState) => {
+  return state.task.tasks;
+};
+export const selectFilter = (state: RootState) => {
+  return state.task.filter;
+};
 export default taskSlices.reducer;
