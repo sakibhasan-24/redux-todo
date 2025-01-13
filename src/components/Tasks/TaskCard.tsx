@@ -1,12 +1,26 @@
 import { ITask } from "@/types/types";
-import React from "react";
 
 interface IProps {
   task: ITask;
 }
+
 const TaskCard = ({ task }: IProps) => {
+  // Function to determine priority styles
+  const getPriorityClass = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "bg-red-100 text-red-800";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800";
+      case "low":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   return (
-    <div className="bg-white w-full  border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 p-4">
+    <div className="bg-white w-full border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 p-4">
       {/* Task Title and Actions */}
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-3">
@@ -17,7 +31,7 @@ const TaskCard = ({ task }: IProps) => {
           />
           {/* Task Title */}
           <span className="text-lg font-semibold text-gray-800">
-            Task Title
+            {task?.title}
           </span>
         </div>
         {/* Delete Button */}
@@ -32,9 +46,20 @@ const TaskCard = ({ task }: IProps) => {
       {/* Task Description */}
       <div className="mt-3">
         <p className="text-sm text-gray-600 leading-relaxed">
-          This is a brief description of the task. It provides additional
-          details or context to help the user understand the task better.
+          {task?.description}
         </p>
+      </div>
+
+      {/* Task Priority */}
+      <div className="mt-3">
+        <span
+          className={`inline-block px-3 py-1 text-sm font-medium rounded-lg ${getPriorityClass(
+            task.priority
+          )}`}
+        >
+          {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}{" "}
+          Priority
+        </span>
       </div>
     </div>
   );

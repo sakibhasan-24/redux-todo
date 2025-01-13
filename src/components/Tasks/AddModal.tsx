@@ -33,11 +33,15 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useAppDispatch } from "@/hooks/hooks";
+import { addTask } from "@/redux/features/tasks/taskSlice";
 
 export function AddModal() {
   const form = useForm();
+  const dispatch = useAppDispatch();
   const onSubmit = (data: any) => {
     console.log("Form data:", data);
+    dispatch(addTask(data));
   };
   return (
     <Dialog>
@@ -104,7 +108,7 @@ export function AddModal() {
               name="dob"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Date of birth</FormLabel>
+                  <FormLabel>Due Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>

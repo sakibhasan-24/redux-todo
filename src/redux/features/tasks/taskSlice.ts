@@ -1,39 +1,29 @@
 import { RootState } from "@/redux/store/store";
 import { ITask } from "@/types/types";
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuid } from "uuid";
 interface InitialState {
   tasks: ITask[];
   filter: "all" | "high" | "low" | "medium";
 }
 
 const initialState: InitialState = {
-  tasks: [
-    {
-      id: "task1",
-      title: "Task 1",
-      description: "Task 1 description description",
-      dueDate: "2026",
-      isCompleted: false,
-      priority: "High",
-    },
-    {
-      id: "task2",
-      title: "Task 2",
-      description: "Task 1 description description",
-      dueDate: "2026",
-      isCompleted: false,
-      priority: "High",
-    },
-  ],
+  tasks: [],
   filter: "all",
 };
 const taskSlices = createSlice({
   name: "task",
   initialState,
   reducers: {
-    addTask: (state, action) => {
-      state.tasks.push(action.payload);
+    addTask: (state, action: PayloadAction<ITask>) => {
+      const id = uuid();
+      const isCompleted = false;
+      const taskData = {
+        ...action.payload,
+        id,
+        isCompleted,
+      };
+      state.tasks.push(taskData);
     },
     deleteTask: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
