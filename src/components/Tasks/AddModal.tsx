@@ -36,7 +36,7 @@ import { CalendarIcon } from "lucide-react";
 
 export function AddModal() {
   const form = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log("Form data:", data);
   };
   return (

@@ -31,7 +31,23 @@ const initialState: InitialState = {
 const taskSlices = createSlice({
   name: "task",
   initialState,
-  reducers: {},
+  reducers: {
+    addTask: (state, action) => {
+      state.tasks.push(action.payload);
+    },
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
+    updateTask: (state, action) => {
+      const updatedTask = action.payload;
+      state.tasks = state.tasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task
+      );
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
 });
 
 export const selectTasks = (state: RootState) => {
@@ -40,4 +56,5 @@ export const selectTasks = (state: RootState) => {
 export const selectFilter = (state: RootState) => {
   return state.task.filter;
 };
+export const { addTask } = taskSlices.actions;
 export default taskSlices.reducer;
