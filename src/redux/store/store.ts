@@ -6,6 +6,8 @@ const store = configureStore({
     task: taskReducer,
     [productsApi.reducerPath]: productsApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
