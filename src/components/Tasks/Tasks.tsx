@@ -1,8 +1,11 @@
 import { useAppSelector } from "@/hooks/hooks";
 import TaskCard from "./TaskCard";
 import { AddModal } from "./AddModal";
+import { useGetProductsQuery } from "@/redux/api/apiSlice";
 
 export default function Tasks() {
+  const { data: products, error, isLoading } = useGetProductsQuery();
+  console.log(products);
   const tasks = useAppSelector((state) => state.task.tasks);
   console.log(tasks);
   return (
